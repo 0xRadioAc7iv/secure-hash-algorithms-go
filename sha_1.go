@@ -48,7 +48,8 @@ func sha0(message []byte) [20]byte {
 
 		// Extend to 80 words (WITHOUT rotation, unlike SHA-1)
 		for j := 16; j < 80; j++ {
-			W[j] = W[j-3] ^ W[j-8] ^ W[j-14] ^ W[j-16]
+			// W[j] = W[j-3]^W[j-8]^W[j-14]^W[j-16] (Apparently, it's SHA-0 when left rotation is not applied here)
+			W[j] = leftRotate(W[j-3]^W[j-8]^W[j-14]^W[j-16], 1)
 		}
 
 		// Initialize hash values for this chunk
